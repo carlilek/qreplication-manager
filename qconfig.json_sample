@@ -1,0 +1,13 @@
+{
+    "email settings":{
+        "server":"smtp.example.com",
+        "sender_address":"qumulo@example.com",
+        "recipient":"storageadmin@example.com"
+    },
+    "qcluster":{
+        "name":"qumulo",
+        "url":"qumulo.example.com",
+        "user":"admin",
+        "password":"admin_pass"
+    }
+}
