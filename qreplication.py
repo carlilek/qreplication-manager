@@ -60,6 +60,7 @@ def send_mail(configdict, subject, body):
 
 def build_mail(repexcept, rep, relid, sourcehost, targethost, sourcepath, targetpath):
     status = rep.get_relationship_status(relid)
+    print status
     subject = 'Replication status for {}:{}'.format(sourcehost,sourcepath)
     body = "Relationship ID: <br>"
     body += "{}<br><br>".format(relid)
@@ -71,12 +72,10 @@ def build_mail(repexcept, rep, relid, sourcehost, targethost, sourcepath, target
     body += "{}<br><br>".format(status['job_state'])
     body += "Start Time: <br>"
     body += "{}<br><br>".format(status['start_time'])
-
     body += "Last End Time: <br>"
     body += "{}<br><br>".format(status['last_ended_time'])
-
-    body += "Last End Reason: <br>"
-    body += "{}<br><br>".format(status['end_reason'])
+    body += "Error from last job: <br>"
+    body += "{}<br><br>".format(status['error_from_last_job'])
 
     body += "Exception (if any): <br>"
     body += "{}".format(repexcept)
@@ -110,9 +109,10 @@ def main(argv):
     relid = findrelationship(rep, *arglist)
     try: 
         rep.replicate(relid)
+        repexcept = None
     except Exception,excpt:
-        pass
-    build_mail(excpt, rep, relid, *arglist)    
+        repexcept = excpt
+    build_mail(repexcept, rep, relid, *arglist)    
 
 if __name__ == '__main__':
     main(sys.argv[1:])
