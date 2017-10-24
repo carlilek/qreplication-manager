@@ -60,7 +60,6 @@ def send_mail(configdict, subject, body):
 
 def build_mail(repexcept, rep, relid, sourcehost, targethost, sourcepath, targetpath):
     status = rep.get_relationship_status(relid)
-    print status
     subject = 'Replication status for {}:{}'.format(sourcehost,sourcepath)
     body = "Relationship ID: <br>"
     body += "{}<br><br>".format(relid)
